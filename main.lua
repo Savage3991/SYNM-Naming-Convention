@@ -89,14 +89,23 @@ task.spawn(function()
             return
         end
 
-        if (_G ~= test_1._G) then
-            warn(" ❌ | getrenv is not working properly (3)")
-            failed = failed + 1
-            return
-        end
+        if (func_exists2(getsenv)) then
+            local global = getsenv(game.Players.LocalPlayer.Character.Animate)
 
-        if (shared ~= test_1.shared) then
-            warn(" ❌ | getrenv is not working properly (3)")
+            if (global._G ~= test_1._G) then
+                warn(" ❌ | getrenv is not working properly (3)")
+                failed = failed + 1
+                return
+            end
+
+            if (global.shared ~= test_1.shared) then
+                warn(" ❌ | getrenv is not working properly (3)")
+                failed = failed + 1
+                return
+            end
+
+        else
+            warn(" ❌ | getrenv (missing getsenv)")
             failed = failed + 1
             return
         end
